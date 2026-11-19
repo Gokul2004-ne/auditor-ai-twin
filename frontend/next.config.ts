@@ -4,7 +4,7 @@ const isGhPages = process.env.GITHUB_PAGES === 'true'
 
 const nextConfig: NextConfig = {
   output: isGhPages ? 'export' : undefined,
-  basePath: isGhPages ? '/auditor-ai-twin' : '',
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? (isGhPages ? '/auditor-ai-twin' : ''),
   images: {
     unoptimized: true,
   },

@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
 import { Loader2, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react'
+import { getBasePath } from '@/lib/utils'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -36,7 +37,7 @@ export default function LoginPage() {
         })
         if (error) throw error
         toast.success('Registration successful! Redirecting...')
-        window.location.href = '/dashboard'
+        window.location.href = `${getBasePath()}/dashboard/`
       } else {
         const { data, error } = await supabase.auth.signInWithPassword({
           email,
@@ -44,7 +45,7 @@ export default function LoginPage() {
         })
         if (error) throw error
         toast.success('Welcome back, Lead Auditor')
-        window.location.href = '/dashboard'
+        window.location.href = `${getBasePath()}/dashboard/`
       }
     } catch (err: any) {
       toast.error(err.message || 'Authentication failed. Please check your credentials.')

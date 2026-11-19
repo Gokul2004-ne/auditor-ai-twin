@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { getBasePath } from '@/lib/utils'
 import type { User } from '@supabase/supabase-js'
 
 export function useAuth() {
@@ -26,7 +27,7 @@ export function useAuth() {
 
   const signOut = async () => {
     await supabase.auth.signOut()
-    window.location.href = '/login'
+    window.location.href = `${getBasePath()}/login/`
   }
 
   return { user, loading, signOut }

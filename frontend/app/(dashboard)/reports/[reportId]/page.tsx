@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import ReportClient from './ReportClient'
 
 export function generateStaticParams() {
@@ -5,5 +6,9 @@ export function generateStaticParams() {
 }
 
 export default function Page() {
-  return <ReportClient />
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-slate-500">Loading report...</div>}>
+      <ReportClient />
+    </Suspense>
+  )
 }

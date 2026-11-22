@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import apiClient from '@/lib/api/client'
 import { Card, CardContent } from '@/components/ui/card'
@@ -19,7 +19,8 @@ import {
 
 export default function CertificateVerificationPage() {
   const params = useParams()
-  const reportId = params.reportId as string
+  const searchParams = useSearchParams()
+  const reportId = ((params?.reportId as string) || searchParams?.get('id') || searchParams?.get('reportId') || 'demo')
 
   const { data: result, isLoading, error } = useQuery({
     queryKey: ['verify-report', reportId],

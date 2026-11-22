@@ -176,7 +176,7 @@ export default function DashboardPage() {
                       <div key={audit.id} className="p-4 hover:bg-slate-50 transition-colors flex items-center justify-between gap-4">
                         <div className="space-y-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <Link href={`/audits/${audit.id}`} className="font-semibold text-sm text-slate-900 hover:text-blue-600 truncate">
+                            <Link href={`/audits/review/?id=${audit.id}`} className="font-semibold text-sm text-slate-900 hover:text-blue-600 truncate">
                               {audit.name}
                             </Link>
                             <Badge variant="outline" className="text-[10px] font-mono shrink-0">
@@ -228,7 +228,7 @@ export default function DashboardPage() {
                             </Badge>
                           )}
 
-                          <Link href={`/audits/${audit.id}`}>
+                          <Link href={`/audits/review/?id=${audit.id}`}>
                             <Button variant="ghost" size="sm" className="h-7 text-xs gap-1 hover:text-blue-600 font-semibold">
                               Review <ArrowRight className="w-3 h-3" />
                             </Button>

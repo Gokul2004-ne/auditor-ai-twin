@@ -185,7 +185,7 @@ startxref
       setProgressStatus('Audit completed! Redirecting to review dashboard...')
 
       toast.success('Audit successfully executed against evidence!')
-      router.push(`/audits/${auditId}`)
+      router.push(`/audits/review/?id=${auditId}`)
     } catch (err: any) {
       console.error('Audit execution error:', err)
       toast.error(err.response?.data?.detail || err.message || 'Audit execution failed')

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
 import apiClient from '@/lib/api/client'
@@ -29,7 +29,8 @@ import {
 
 export default function ReportDetailPage() {
   const params = useParams()
-  const reportId = params.reportId as string
+  const searchParams = useSearchParams()
+  const reportId = ((params?.reportId as string) || searchParams?.get('id') || searchParams?.get('reportId') || 'demo')
 
   const [isSignModalOpen, setIsSignModalOpen] = useState(false)
   const [executiveSummary, setExecutiveSummary] = useState('')

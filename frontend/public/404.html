@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auditor AI Twin</title>
+  <script type="text/javascript">
+    (function() {
+      var l = window.location;
+      var path = l.pathname;
+      var repo = '/auditor-ai-twin';
+      var relative = path.startsWith(repo) ? path.slice(repo.length) : path;
+      if (relative.startsWith('/')) relative = relative.slice(1);
+
+      // Check audits/<id>
+      var auditMatch = relative.match(/^audits\/([^\/\?]+)/);
+      if (auditMatch && auditMatch[1] !== 'demo' && auditMatch[1] !== 'new' && auditMatch[1] !== 'review') {
+        window.location.replace(repo + '/audits/review/?id=' + encodeURIComponent(auditMatch[1]));
+        return;
+      }
+
+      // Check reports/<id>
+      var reportMatch = relative.match(/^reports\/([^\/\?]+)/);
+      if (reportMatch && reportMatch[1] !== 'demo' && reportMatch[1] !== 'view') {
+        window.location.replace(repo + '/reports/view/?id=' + encodeURIComponent(reportMatch[1]));
+        return;
+      }
+
+      // Check verify/<id>
+      var verifyMatch = relative.match(/^verify\/([^\/\?]+)/);
+      if (verifyMatch && verifyMatch[1] !== 'demo' && verifyMatch[1] !== 'view') {
+        window.location.replace(repo + '/verify/view/?id=' + encodeURIComponent(verifyMatch[1]));
+        return;
+      }
+
+      // Fallback
+      window.location.replace(repo + '/login/');
+    })();
+  </script>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #0f172a; color: #94a3b8; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
+  <div style="text-align: center;">
+    <h2 style="color: #f8fafc; font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Redirecting to Auditor AI Twin...</h2>
+    <p style="font-size: 0.875rem;">Loading compliance workspace...</p>
+  </div>
+</body>
+</html>

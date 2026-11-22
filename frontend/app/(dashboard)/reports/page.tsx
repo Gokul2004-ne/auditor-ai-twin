@@ -73,7 +73,7 @@ export default function ReportsListPage() {
                   {reports.map((report) => (
                     <tr key={report.id} className="hover:bg-slate-50/80 transition-colors">
                       <td className="px-6 py-4">
-                        <Link href={`/reports/${report.id}`} className="font-semibold text-slate-900 hover:text-blue-600 flex items-center gap-2">
+                        <Link href={`/reports/view/?id=${report.id}`} className="font-semibold text-slate-900 hover:text-blue-600 flex items-center gap-2">
                           <FileText className="w-4 h-4 text-blue-600 shrink-0" />
                           <span>{report.title || 'Official ISO Audit Report'}</span>
                         </Link>
@@ -105,7 +105,7 @@ export default function ReportsListPage() {
                       </td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <Link href={`/reports/${report.id}`}>
+                          <Link href={`/reports/view/?id=${report.id}`}>
                             <Button variant="outline" size="sm" className="h-7 text-xs gap-1">
                               View & Sign <ArrowRight className="w-3 h-3" />
                             </Button>

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useMemo } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import apiClient from '@/lib/api/client'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
@@ -245,9 +245,10 @@ const getStandardClauses = (standardCode?: string, auditId?: string): Finding[] 
 
 export default function AuditReviewPage() {
   const params = useParams()
+  const searchParams = useSearchParams()
   const router = useRouter()
   const queryClient = useQueryClient()
-  const auditId = params.auditId as string
+  const auditId = ((params?.auditId as string) || searchParams?.get('id') || searchParams?.get('auditId') || 'demo')
 
   const [currentStep, setCurrentStep] = useState(0)
   const [selectedStatus, setSelectedStatus] = useState<'compliant' | 'non_compliant' | null>(null)

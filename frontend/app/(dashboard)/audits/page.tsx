@@ -131,7 +131,7 @@ export default function AuditsPage() {
                         }`}
                       >
                         <td className="px-6 py-4">
-                          <Link href={`/audits/${audit.id}`} className="font-semibold text-slate-900 hover:text-blue-600">
+                          <Link href={`/audits/review/?id=${audit.id}`} className="font-semibold text-slate-900 hover:text-blue-600">
                             {audit.name}
                           </Link>
                           <div className="text-[11px] text-slate-400 mt-0.5 font-mono">
@@ -212,7 +212,7 @@ export default function AuditsPage() {
                         </td>
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <Link href={`/audits/${audit.id}`}>
+                            <Link href={`/audits/review/?id=${audit.id}`}>
                               <Button
                                 variant="outline"
                                 size="sm"

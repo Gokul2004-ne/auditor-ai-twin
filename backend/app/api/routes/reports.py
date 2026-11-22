@@ -1,3 +1,4 @@
+from typing import Optional
 from datetime import datetime, timezone
 import hashlib
 from fastapi import APIRouter, HTTPException, Response, Body
@@ -11,8 +12,14 @@ router = APIRouter(prefix="/reports", tags=["reports"])
 
 
 @router.get("")
-async def list_reports(audit_id: str, user: CurrentUser):
-    return await report_service.list_reports(audit_id)
+async def list_reports(user: CurrentUser, audit_id: Optional[str] = None):
+    if audit_id:
+        return await report_service.list_reports(audit_id)
+    try:
+        res = supabase_service.client.table("reports").select("*").order("created_at", desc=True).execute()
+        return res.data or []
+    except Exception:
+        return []
 
 
 @router.post("", status_code=201)

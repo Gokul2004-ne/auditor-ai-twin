@@ -5,8 +5,8 @@ export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://dkpcclyyuqzseqqmfqvh.supabase.co',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrcGNjbHl5dXF6c2VxcW1mcXZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUxMDM4OTQsImV4cCI6MjExMDY3OTg5NH0.LZLNww63gbnfupuYdaBwC71wSBQ-Lf6hqhYVu39p7cE',
     {
       cookies: {
         getAll() {
@@ -27,10 +27,11 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  const pathname = request.nextUrl.pathname
   const isPublicRoute =
-    request.nextUrl.pathname.startsWith('/login') ||
-    request.nextUrl.pathname.startsWith('/verify') ||
-    request.nextUrl.pathname === '/'
+    pathname.startsWith('/login') ||
+    pathname.startsWith('/verify') ||
+    pathname === '/'
 
   if (!user && !isPublicRoute) {
     const url = request.nextUrl.clone()
@@ -38,9 +39,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  if (user && request.nextUrl.pathname === '/login') {
+  if (user && pathname.startsWith('/login')) {
+    const isAuditee =
+      user.user_metadata?.role === 'auditee' ||
+      user.email?.toLowerCase().includes('auditee')
+
     const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
+    url.pathname = isAuditee ? '/auditee/dashboard' : '/dashboard'
     return NextResponse.redirect(url)
   }
 

@@ -60,3 +60,4 @@ run_migration.py
 Thumbs.db
 .vscode/
 .idea/
+*.tsbuildinfo

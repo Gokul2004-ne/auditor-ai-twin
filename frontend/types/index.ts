@@ -1,6 +1,16 @@
-export type AuditStatus = 'draft' | 'processing' | 'under_review' | 'approved' | 'signed' | 'archived'
+export type AuditStatus =
+  | 'draft'
+  | 'processing'
+  | 'under_review'
+  | 'approved'
+  | 'signed'
+  | 'archived'
+  | 'rejected'
+  | 'resubmitted'
+  | 'resended'
+  | 'rebinded'
 export type FindingStatus = 'compliant' | 'partially_compliant' | 'non_compliant' | 'not_applicable' | 'needs_review'
-export type UserRole = 'admin' | 'auditor' | 'reviewer' | 'viewer'
+export type UserRole = 'admin' | 'auditor' | 'reviewer' | 'viewer' | 'auditee'
 
 export interface Profile {
   id: string
@@ -16,6 +26,18 @@ export interface Organization {
   created_at: string
 }
 
+export interface RCA8Delta {
+  d1_team: string
+  d2_problem: string
+  d3_containment: string
+  d4_root_cause: string
+  d5_corrective_action: string
+  d6_validation: string
+  d7_prevention: string
+  d8_closure: string
+  completed_at?: string
+}
+
 export interface Audit {
   id: string
   organization_id: string
@@ -23,6 +45,15 @@ export interface Audit {
   standard_code: string
   standard_version: string
   status: AuditStatus
+  workflow_status?: AuditStatus
+  resend_count?: number
+  rebind_count?: number
+  last_rejected_clause?: string
+  last_rejected_clause_index?: number
+  resend_statement?: string
+  corrective_recommendation?: string
+  rca_8delta?: RCA8Delta
+  notes?: string
   overall_score?: number
   created_by?: string
   created_at: string
@@ -60,6 +91,9 @@ export interface Finding {
   organization_id?: string
   audit_id: string
   audit_clause_id?: string
+  clause_id?: string
+  title?: string
+  description?: string
   status: FindingStatus
   ai_status?: FindingStatus
   auditor_status?: FindingStatus

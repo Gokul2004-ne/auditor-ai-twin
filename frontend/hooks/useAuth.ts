@@ -30,5 +30,12 @@ export function useAuth() {
     window.location.href = `${getBasePath()}/login/`
   }
 
-  return { user, loading, signOut }
+  // Derive user role: 'auditee' vs 'auditor'
+  const role: 'auditor' | 'auditee' =
+    user?.user_metadata?.role === 'auditee' ||
+    user?.email?.toLowerCase().includes('auditee')
+      ? 'auditee'
+      : 'auditor'
+
+  return { user, role, loading, signOut }
 }

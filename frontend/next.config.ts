@@ -1,10 +1,12 @@
 import type { NextConfig } from 'next'
 
-const isGhPages = process.env.GITHUB_PAGES === 'true'
+const isProd = process.env.NODE_ENV === 'production'
+const basePath = isProd ? '/auditor-ai-twin' : ''
 
 const nextConfig: NextConfig = {
-  output: isGhPages ? 'export' : undefined,
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? (isGhPages ? '/auditor-ai-twin' : ''),
+  output: 'export',
+  basePath: basePath,
+  assetPrefix: isProd ? `${basePath}/` : undefined,
   images: {
     unoptimized: true,
   },
